@@ -16,7 +16,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 
 const user = require('./routes/userRoute');
+const product = require('./routes/productRoute');
 app.use('/api', user)
+app.use('/api', product)
 
 app.get('/', (req, res) => {
     res.send('Server is Running! 🚀');

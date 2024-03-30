@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const errorMiddleware = require('./middleware/error');
+const rateLimitMiddleware = require('./middleware/rateLimitMiddleware'); 
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
+app.use(rateLimitMiddleware);
 
 const user = require('./routes/userRoute');
 const product = require('./routes/productRoute');
@@ -24,9 +26,19 @@ app.use('/api', product)
 app.use('/api', order)
 app.use('/api', payment)
 
-app.get('/', (req, res) => {
+app.get('/healthCheck', (req, res) => {
     res.send('Server is Running! 🚀');
 });
+
+// error handler for rate limit exceeded errors
+app.use((err, req, res, next) => {
+    if (err instanceof rateLimitMiddleware.RateLimitExceeded) {
+        res.status(429).json({ error: 'Rate limit exceeded' });
+    } else {
+        next(err);
+    }
+});
+
 app.use(errorMiddleware);
 
 module.exports = app;

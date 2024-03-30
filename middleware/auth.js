@@ -13,4 +13,15 @@ module.exports = {
         req.user = await User.findById(decodedData.id);
         next();
     }),
+
+    authorizeRoles : (...roles) => {
+        return (req, res, next) => {
+    
+            if (!roles.includes(req.user.role)) {
+                return next(new syncErrorHandler(`Role: ${req.user.role} is not allowed`, 403));
+            }
+            next();
+        }
+    }
+    
 }

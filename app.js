@@ -18,9 +18,11 @@ app.use(fileUpload());
 const user = require('./routes/userRoute');
 const product = require('./routes/productRoute');
 const order = require('./routes/orderRoute');
+const payment = require('./routes/paymentRoute');
 app.use('/api', user)
 app.use('/api', product)
 app.use('/api', order)
+app.use('/api', payment)
 
 app.get('/', (req, res) => {
     res.send('Server is Running! 🚀');

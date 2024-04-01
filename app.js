@@ -3,13 +3,12 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const errorMiddleware = require('./middleware/error');
-const rateLimitMiddleware = require('./middleware/rateLimitMiddleware');
 const cors = require("cors");
 const app = express();
-
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: 'config/config.env' });
 }
+const rateLimitMiddleware = require('./middleware/rateLimitMiddleware');
 
 app.use(
     cors(
@@ -20,12 +19,11 @@ app.use(
         // }
     )
 );
-
+app.use(rateLimitMiddleware);
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
-app.use(rateLimitMiddleware);
 
 const user = require('./routes/userRoute');
 const product = require('./routes/productRoute');
@@ -41,13 +39,13 @@ app.get('/healthCheck', (req, res) => {
 });
 
 // error handler for rate limit exceeded errors
-// app.use((err, req, res, next) => {
-//     if (err instanceof rateLimitMiddleware.RateLimitExceeded) {
-//         res.status(429).json({ error: 'Rate limit exceeded' });
-//     } else {
-//         next(err);
-//     }
-// });
+app.use((err, req, res, next) => {
+    if (err && err.message === 'Too many requests from this IP, please try again later') {
+        res.status(429).json({ error: 'Rate limit exceeded' });
+    } else {
+        next(err);
+    }
+})
 
 app.use(errorMiddleware);
 

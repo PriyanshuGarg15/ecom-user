@@ -224,7 +224,7 @@ module.exports = {
             return next(new SyncErrorHandler(`User doesn't exist with id: ${req.params.id}`, 404));
         }
     
-        await user.remove();
+        await user.deleteUser();
     
         res.status(200).json({
             success: true

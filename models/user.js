@@ -57,6 +57,10 @@ userSchema.methods.getResetPasswordToken = async function () {
     return resetToken;
 }
 
+userSchema.methods.deleteUser = async function () {
+    return await this.model('User').deleteOne({ _id: this._id });
+};
+
 
 
 module.exports = mongoose.model('User', userSchema);

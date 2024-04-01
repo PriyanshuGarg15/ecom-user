@@ -58,6 +58,10 @@ module.exports = {
     // CREATE Product
     createProduct: asyncErrorHandler(async (req, res, next) => {
 
+
+        if (!req.body.images) {
+            return next(new ErrorHandler("Images not shared in the request", 400));
+        }
         let images = [];
         if (typeof req.body.images === "string") {
             images.push(req.body.images);
@@ -139,30 +143,32 @@ module.exports = {
             }
             req.body.images = imagesLink;
         }
+        if (req.body.logo) {
+            if (req.body.logo.length > 0) {
+                await cloudinary.v2.uploader.destroy(product.brand.logo.public_id);
+                const result = await cloudinary.v2.uploader.upload(req.body.logo, {
+                    folder: "brands",
+                });
+                const brandLogo = {
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                };
 
-        if (req.body.logo.length > 0) {
-            await cloudinary.v2.uploader.destroy(product.brand.logo.public_id);
-            const result = await cloudinary.v2.uploader.upload(req.body.logo, {
-                folder: "brands",
-            });
-            const brandLogo = {
-                public_id: result.public_id,
-                url: result.secure_url,
-            };
-
-            req.body.brand = {
-                name: req.body.brandname,
-                logo: brandLogo
+                req.body.brand = {
+                    name: req.body.brandname,
+                    logo: brandLogo
+                }
             }
         }
+        if (req.body.specifications) {
+            let specs = [];
+            req.body.specifications.forEach((s) => {
+                specs.push(JSON.parse(s))
+            });
+            req.body.specifications = specs;
+        }
 
-        let specs = [];
-        req.body.specifications.forEach((s) => {
-            specs.push(JSON.parse(s))
-        });
-        req.body.specifications = specs;
         req.body.user = req.user.id;
-
         product = await Product.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true,
@@ -185,7 +191,7 @@ module.exports = {
         for (let i = 0; i < product.images.length; i++) {
             await cloudinary.v2.uploader.destroy(product.images[i].public_id);
         }
-        await product.remove();
+        await product.deleteProduct();
         res.status(201).json({
             success: true
         });

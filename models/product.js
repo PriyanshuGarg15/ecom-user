@@ -113,4 +113,8 @@ const productSchema = new mongoose.Schema({
     }
 });
 
+productSchema.methods.deleteProduct = async function () {
+    return await this.model('Product').deleteOne({ _id: this._id });
+};
+
 module.exports = mongoose.model('Product', productSchema);

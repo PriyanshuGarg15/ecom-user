@@ -3,13 +3,23 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const errorMiddleware = require('./middleware/error');
-const rateLimitMiddleware = require('./middleware/rateLimitMiddleware'); 
-
+const rateLimitMiddleware = require('./middleware/rateLimitMiddleware');
+const cors = require("cors");
 const app = express();
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: 'config/config.env' });
 }
+
+app.use(
+    cors(
+        // {
+        //     origin: [/localhost:3008$/, /\.heroku\.com$/],
+        //     methods: ["GET", "POST"],
+        //     optionsSuccessStatus: 200,
+        // }
+    )
+);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -31,13 +41,13 @@ app.get('/healthCheck', (req, res) => {
 });
 
 // error handler for rate limit exceeded errors
-app.use((err, req, res, next) => {
-    if (err instanceof rateLimitMiddleware.RateLimitExceeded) {
-        res.status(429).json({ error: 'Rate limit exceeded' });
-    } else {
-        next(err);
-    }
-});
+// app.use((err, req, res, next) => {
+//     if (err instanceof rateLimitMiddleware.RateLimitExceeded) {
+//         res.status(429).json({ error: 'Rate limit exceeded' });
+//     } else {
+//         next(err);
+//     }
+// });
 
 app.use(errorMiddleware);
 

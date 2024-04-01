@@ -89,4 +89,8 @@ const orderSchema = new mongoose.Schema({
     },
 });
 
+orderSchema.methods.deleteOrder = async function () {
+    return await this.model('Order').deleteOne({ _id: this._id });
+};
+
 module.exports = mongoose.model("Order", orderSchema);

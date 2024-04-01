@@ -143,7 +143,7 @@ module.exports = {
             return next(new ErrorHandler("Order Not Found", 404));
         }
 
-        await order.remove();
+        await order.deleteOrder();
         res.status(200).json({
             success: true,
         });

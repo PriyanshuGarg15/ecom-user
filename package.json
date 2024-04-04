@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon backend/server.js"
+    "test": "NODE_ENV=test jest --testTimeout=10000",
+    "server": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -22,5 +22,8 @@
     "express-rate-limit": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.4"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

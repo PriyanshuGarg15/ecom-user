@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:975049969826:task-definition/ecom-user-td:1",
+    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:975049969826:task-definition/ecom-user-td:3",
     "containerDefinitions": [
         {
             "name": "ecom-user-container",
-            "image": "975049969826.dkr.ecr.ap-south-1.amazonaws.com/ecom-user",
+            "image": "975049969826.dkr.ecr.ap-south-1.amazonaws.com/ecom-user:057e57337496169366ff4f1679a7b5533ea2d649",
             "cpu": 0,
             "portMappings": [
                 {
@@ -24,7 +24,6 @@
             ],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -32,8 +31,7 @@
                     "awslogs-group": "/ecs/ecom-user-td",
                     "awslogs-region": "ap-south-1",
                     "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
+                }
             },
             "systemControls": []
         }
@@ -42,7 +40,7 @@
     "taskRoleArn": "arn:aws:iam::975049969826:role/ecs-task-role",
     "executionRoleArn": "arn:aws:iam::975049969826:role/ecs-task-role",
     "networkMode": "awsvpc",
-    "revision": 1,
+    "revision": 3,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -91,7 +89,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2024-04-03T17:54:22.220Z",
+    "registeredAt": "2024-04-04T07:04:05.380Z",
     "registeredBy": "arn:aws:iam::975049969826:root",
     "tags": []
 }

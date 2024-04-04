@@ -1,6 +1,6 @@
 const app = require('./app');
 const connectDatabase = require('./config/database');
-const PORT = process.env.PORT || 4040;
+const PORT = 4040;
 // UncaughtException Error
 process.on('uncaughtException', (err) => {
     console.log(`Error: ${err.message}`);

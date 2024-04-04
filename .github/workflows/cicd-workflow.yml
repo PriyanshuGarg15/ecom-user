@@ -47,6 +47,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ecom-user-service
+          service: ecom-user-service-2
           cluster: ecomCluster
           wait-for-service-stability: true    

@@ -5,6 +5,13 @@
             "name": "ecom-user-container",
             "image": "975049969826.dkr.ecr.ap-south-1.amazonaws.com/ecom-user:057e57337496169366ff4f1679a7b5533ea2d649",
             "cpu": 0,
+            "healthCheck": {
+                "command": ["CMD-SHELL", "curl -f http://localhost:4040/healthCheck || exit 1"],
+                "interval": 30,
+                "timeout": 5,
+                "retries": 3,
+                "startPeriod": 60
+              },
             "portMappings": [
                 {
                     "name": "ecom-user-container-4040-tcp",

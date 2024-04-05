@@ -8,6 +8,10 @@ The microservice is hosted on AWS ECS Docker at the following URL:
 
 http://ecom-user-lb-321143357.ap-south-1.elb.amazonaws.com:4040
 
+## Postman Collection
+
+https://api.postman.com/collections/20014395-8b03e494-a88d-44f6-a486-54dead2d6f36?access_key=PMAT-01HTQDS0RD53JBKAZKN9A9PJA8
+
 
 
 ## Routes

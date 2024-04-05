@@ -4,7 +4,7 @@ The User microservice is designed to handle user-related operations such as logi
 
 ## Access
 
-The microservice is hosted on AWS at the following URL:
+The microservice is hosted on AWS ECS Docker at the following URL:
 
 http://ecom-user-lb-321143357.ap-south-1.elb.amazonaws.com:4040
 
@@ -90,25 +90,14 @@ http://ecom-user-lb-321143357.ap-south-1.elb.amazonaws.com:4040
 - Express.js: Web framework for Node.js
 - Mongoose: MongoDB object modeling tool
 - @sendgrid/mail: ^8.1.3
-- bcryptjs: ^2.4.3
-- body-parser: ^1.20.2
-- cookie-parser: ^1.4.6
-- cors: ^2.8.5
-- dotenv: ^16.4.5
-- express: ^4.19.2
-- express-fileupload: ^1.5.0
-- express-rate-limit: ^7.2.0
-- jsonwebtoken: ^9.0.2
 
 ## Usage
 
 1. Clone the repository.
 2. Install dependencies using `npm install`.
-3. Set environment variables (if needed).
+3. Set environment variables.
 4. Run the microservice using `npm start`.
 
 ## Contributors
-
-- [Your Name](#) - Lead Developer
 
 - [Priyanshu Garg](#) - Developer
